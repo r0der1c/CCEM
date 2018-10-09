@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/resources/**").permitAll()
 			.antMatchers("/login").permitAll()
-			.antMatchers("/home").permitAll()
+			.antMatchers("/admin/**").permitAll()
 			.antMatchers("/**").access("isAuthenticated()")
 			.and().formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/home", true)
 			.and().logout().logoutSuccessUrl("/login")
