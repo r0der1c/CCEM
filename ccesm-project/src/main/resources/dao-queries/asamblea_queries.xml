@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+	<query name="GET_ASAMBLEAS_GRUPO">
+        <![CDATA[
+			 select * from asamblea where idgrp = :idgrp
+        ]]>
+	</query>
+	<query name="GET_SERVICIOS_ASAMBLEA">
+        <![CDATA[
+			 select acd.* from actividad_conf ac
+			 inner join (
+				 select idact, idacf, max(fecha) fecha from actividad
+				 where estado = 'ABI'
+				 group by idact, idacf
+			 ) a on a.idacf = ac.idacf
+			 inner join actividad_conf_det acd on acd.idacf = ac.idacf
+			 inner join asamblea asam on asam.idasm = ac.idasm and asam.idgrp = :idgrp
+			 where ac.codtac = 'ASAMBLEA'
+			 and asam.idasm = :idasm
+			 order by ac.idacf, acd.orden
+        ]]>
+	</query>
+</queries>

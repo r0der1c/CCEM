@@ -128,10 +128,11 @@
 
 		<!-- Postgres Driver -->
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.3-1100-jdbc41</version>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>42.2.5</version>
 		</dependency>
+
 
 		<!-- Oracle Driver -->
 		<dependency>

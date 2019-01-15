@@ -5,11 +5,11 @@ import org.sitemesh.config.ConfigurableSiteMeshFilter;
 
 public class AppSiteMeshFilter extends ConfigurableSiteMeshFilter {
 
-	private final String MAIN_DECORATOR_DEFAULT_URL = "/WEB-INF/decorators/classic/main.jsp";
+	private final String MAIN_DECORATOR_DEFAULT_URL = "/WEB-INF/decorators/classic/decoratorAdministrador.jsp";
 
 	  @Override
 	  protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
 	       builder
-	       		.addDecoratorPath("/home",MAIN_DECORATOR_DEFAULT_URL);
+	       		.addDecoratorPath("/admin**",MAIN_DECORATOR_DEFAULT_URL);
 	 }
 }

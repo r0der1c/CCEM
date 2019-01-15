@@ -8,9 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ccesm.util.WebUtility;
+
 @Controller
 @RequestMapping("/")
-public class BaseController implements Serializable{
+public class BaseController extends WebUtility implements Serializable{
 	private static final long serialVersionUID = -7453627320579188553L;
 
 	@RequestMapping("/login")
