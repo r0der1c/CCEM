@@ -3,6 +3,5 @@ Ext.define('admin.asamblea.AsambleaController', {
     alias: 'controller.asambleacontroller',
 
     tabchange : function( tabPanel, newCard, oldCard, eOpts ){
-    	alert("adf")
     }
 });

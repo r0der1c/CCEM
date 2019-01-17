@@ -5,6 +5,11 @@
 <html>
 	<head>
 		<script src="${contextPath}/resources/views/classic/administrador/asamblea/AsambleaView.js" type="text/javascript"></script>
+		<style type="text/css">
+			.x-form-trigger-wrap.x-form-trigger-wrap-default{
+				border:none
+			}
+		</style>
 		<script type="text/javascript">
 			Ext.onReady(function(){
 				new View({"asambleas": Ext.decode('${asambleas}')});

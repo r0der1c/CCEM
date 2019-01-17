@@ -9,8 +9,12 @@
 		<title>CCESM - Administracion</title>
 		<link href="${contextPath}/resources/sencha/classic/themes/theme-triton-all.css" rel="stylesheet" type="text/css" />
 		<script src="${contextPath}/resources/sencha/classic/ext-all.js" type="text/javascript"></script>
+		<script src="${contextPath}/resources/sencha/classic/fixes/workarounds.js" type="text/javascript"></script>
 		<script type="text/javascript">
-			Ext.Loader.setPath({"admin": "${contextPath}/resources/views/classic/administrador"});
+			Ext.Loader.setPath({
+				"admin": "${contextPath}/resources/views/classic/administrador",
+				"ux": "${contextPath}/resources/sencha/classic/ux",
+			});
 			Ext.Loader.setConfig({
 			    enabled: true,
 			    disableCaching: false

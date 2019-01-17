@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <queries>
+	<query name="GET_SERVIDORES">
+        <![CDATA[
+			select s.* from servidor_compromiso sc
+			inner join servidor s on s.idsrv = sc.idsrv
+			and sc.estado = 'ACT' and extract(year from SC.fecha_compromiso) = :anio
+        ]]>
+	</query>
 	<query name="GET_ASAMBLEAS_GRUPO">
         <![CDATA[
 			 select * from asamblea where idgrp = :idgrp
@@ -7,7 +14,7 @@
 	</query>
 	<query name="GET_SERVICIOS_ASAMBLEA">
         <![CDATA[
-			 select acd.* from actividad_conf ac
+			 select acd.*, ts.orden || '_' || ts.codtsv ordentsv, ts.codtsv, ts.descripcion tipo_servicio from actividad_conf ac
 			 inner join (
 				 select idact, idacf, max(fecha) fecha from actividad
 				 where estado = 'ABI'
@@ -15,9 +22,10 @@
 			 ) a on a.idacf = ac.idacf
 			 inner join actividad_conf_det acd on acd.idacf = ac.idacf
 			 inner join asamblea asam on asam.idasm = ac.idasm and asam.idgrp = :idgrp
+			 inner join tipo_servicio ts on ts.codtsv = acd.codtsv and ts.estado = 'ACT'
 			 where ac.codtac = 'ASAMBLEA'
 			 and asam.idasm = :idasm
-			 order by ac.idacf, acd.orden
+			 order by ac.idacf, ts.orden, acd.orden
         ]]>
 	</query>
 </queries>

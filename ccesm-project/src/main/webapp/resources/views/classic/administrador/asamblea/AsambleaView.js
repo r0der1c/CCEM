@@ -1,8 +1,9 @@
 Ext.define("View", {
     extend: 'admin.App',
 	requires:[
+      'ux.GridFilterTextField',
       'admin.asamblea.AsambleaController',
-      'admin.asamblea.AsambleaViewModel'
+      'admin.asamblea.AsambleaViewModel',
     ],
     init: function(view){
     	if(view.asambleas && view.asambleas.length){
@@ -11,16 +12,41 @@ Ext.define("View", {
     				title: "Asamblea " + o.nombre,
     				idasm: o.idasm,
     				layout: "fit",
+    				border: false,
     				defaults: {
     					border: false
     				},
     				items: {
 	    			   xtype: "grid",
+	    			   plugins: [
+			              	Ext.create('Ext.grid.plugin.CellEditing', {
+			              		clicksToEdit: 1
+			              	})
+			           ],
+			           border: false,
 	        		   defaults: {
 	        			   border: false
 	        		   },
+	        		   tbar: {style: "margin:0;padding:0",
+	        			   items:[
+	        			        {xtype: "gridfiltertextfield", style: "border: none", flex: 1 },
+							    {
+							    	html: "+",
+									handler: function(){
+										this.up("grid").view.features[0].expandAll();
+									}
+								},
+								{
+									html: "-",
+									handler: function(){
+										this.up("grid").view.features[0].collapseAll();
+									}
+								},
+							]
+	        		   },
         			   store: {
         			        autoLoad : true,
+        			        fields:[{name: "ordentsv", type: "int"}],
         		            proxy: {
         		                type: 'ajax',
         		                extraParams:{
@@ -33,14 +59,25 @@ Ext.define("View", {
         		                    type: 'json',
         		                    rootProperty: 'list'
         		                },
-
-        		            }
+        		            },
+	        		   		groupField: "ordentsv"
         			    },
-	    			   columns:{
+        			    features: [{
+	  						  ftype: "grouping",
+	  						  enableNoGroups: false,
+	  						  enableGroupingMenu: false,
+	  						  groupHeaderTpl: '<span style="color:#5fa2dd; font-weight: bold">{[values.rows[0].data.tipo_servicio]}</span>'
+  					  	}],
+  					  	columns:{
+			    	       defaults : {
+			    	    	  menuDisabled : true,
+			    	    	  sortable:false,
+			    	    	  hasFocus: false
+			    	       },
 	    				   items:[
 	    				      {xtype: 'rownumberer', width:50, flex:0, align:'center'},
-    				          {header: "Servicio", flex: 1, dataIndex: "codigo"},
-    				          {header: "Servidor", flex: 1, dataIndex: "descripcion"},
+    				          {header: "Servicio", flex: 1, dataIndex: "descripcion", renderer: function(v){return "<b>"+v+"</b>"}},
+    				          {header: "Servidor", flex: 1, dataIndex: "servidor", editor: {type:"textfield",selectOnFocus: true}},
 				          ]
 	    			   }
 	    		   }
@@ -73,10 +110,15 @@ Ext.define("View", {
     		   }
     	   },
 	       {
-	    	   xtype: "grid",
+    		   xtype: "grid",
+    		   tbar: {style: "margin:0;padding:0", items:[{xtype: "gridfiltertextfield", style: "width:100%;border: none" }]},
+    		   bind:{
+    			   store:"{servidores}"
+    		   },
 	    	   columns:{
 	    		   items:[
-    		          {header: "Servidor"},
+    		          {xtype: 'rownumberer', width:50, flex:0, align:'center'},
+    		          {header: "Servidor", dataIndex: "nombre_listado", flex:1},
 		          ]
 	    	   }
 	       }

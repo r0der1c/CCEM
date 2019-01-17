@@ -1,5 +1,7 @@
 package ccesm.controller.admin;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
@@ -34,6 +36,14 @@ public class AsambleaController extends BaseController{
 		map.put("idgrp", 1L);
 		map.put("idasm", idasm);
 		map.put("list", asambleaDao.list(getQueryByName(AsambleaDao.GET_SERVICIOS_ASAMBLEA), map));
+		serialize(map, response);
+	}
+
+	@RequestMapping("/getServidores")
+	public void getServidores(HttpServletResponse response){
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("anio", new GregorianCalendar().get(Calendar.YEAR));
+		map.put("list", asambleaDao.list(getQueryByName(AsambleaDao.GET_SERVIDORES), map));
 		serialize(map, response);
 	}
 
